@@ -18,7 +18,7 @@
         overlays = [ rust-overlay.overlays.default ];
       };
 
-      rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./toolchain.toml;
+      rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
 
       manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
       pname = manifest.name;
