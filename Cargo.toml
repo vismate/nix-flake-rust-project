@@ -1,5 +1,6 @@
 [package]
 name = "rust-project"
+description = "an awesome rust project"
 version = "0.1.0"
 edition = "2024"
 

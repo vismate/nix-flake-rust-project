@@ -20,6 +20,11 @@
 
       rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
 
+      rustPlatform = pkgs.makeRustPlatform {
+        cargo = rustToolchain;
+        rustc = rustToolchain;
+      };
+      
       manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
       pname = manifest.name;
       version = manifest.version;
@@ -28,7 +33,7 @@
       buildInputs = [ ];
     in
     {
-      packages.default = pkgs.rustPlatform.buildRustPackage {
+      packages.default = rustPlatform.buildRustPackage {
         inherit pname version nativeBuildInputs buildInputs;
 
         meta = {
@@ -42,7 +47,7 @@
         src = pkgs.nix-gitignore.gitignoreSource [] ( pkgs.lib.cleanSource ./. );
         cargoLock.lockFile = ./Cargo.lock;
 
-        cargoSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        cargoHash = pkgs.lib.fakeHash;
 
         doCheck = true;
       };
